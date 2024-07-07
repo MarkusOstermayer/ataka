@@ -16,22 +16,41 @@ state = {
 
 app = typer.Typer()
 
-app.add_typer(player_cli.exploit.app,
-              name='exploit', help='Manage exploits.')
-app.add_typer(player_cli.flags.app,
-              name='flag', help='Manage flags.')
-app.add_typer(player_cli.service.app,
-              name='service', help='Show services (legacy).')
+app.add_typer(
+    player_cli.exploit.app,
+    name='exploit',
+    help='Manage exploits.'
+)
+app.add_typer(
+    player_cli.flags.app,
+    name='flag',
+    help='Manage flags.'
+)
+app.add_typer(
+    player_cli.service.app,
+    name='service',
+    help='Show services (legacy).'
+)
 
 
 @app.callback()
 def main(
-        host: str = typer.Option(player_cli.ctfconfig_wrapper.ATAKA_HOST, '--host', '-h',
-                                 help='Ataka web API host.'),
-        bypass_tools: bool = typer.Option(False, '--bypass-tools', '-b', help=
-        'Interact directly with the gameserver instead of using our tools. '
-        'Use only in emergencies!'),
-        debug: bool = typer.Option(False, '--debug', '-d', help='Turn on debug logging')
+    host: str = typer.Option(
+        player_cli.ctfconfig_wrapper.ATAKA_HOST,
+        '--host', '-h',
+        help='Ataka web API host.'
+    ),
+    bypass_tools: bool = typer.Option(
+        False,
+        '--bypass-tools', '-b',
+        help=(
+            'Interact directly with the gameserver instead of using our tools. '
+            'Use only in emergencies!')
+    ),
+    debug: bool = typer.Option(
+        False, '--debug', '-d',
+        help='Turn on debug logging'
+    )
 ):
     """
     Player command-line interface to Ataka.
@@ -43,9 +62,12 @@ def main(
 
 @app.command('reload', help='Reload offline ctfconfig')
 def reload_config(
-        host: str = typer.Option(None, '--host', '-h',
-                                 help='Ataka web API host.'),
-    ):
+    host: str = typer.Option(
+        None,
+        '--host', '-h',
+        help='Ataka web API host.'
+    ),
+):
     if host is not None:
         state['host'] = host
 

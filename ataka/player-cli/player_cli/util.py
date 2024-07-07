@@ -52,7 +52,8 @@ def request(method, endpoint, data=None, params=None):
                 print(f"{DEBUG_STR}: {data}")
             print(f"{DEBUG_STR}: ")
 
-        result = player_cli.ctfconfig_wrapper.request(method, endpoint, data=data)
+        result = player_cli.ctfconfig_wrapper.request(
+            method, endpoint, data=data)
         if player_cli.state['debug']:
             print(f"{DEBUG_STR}: {result}")
         return result
@@ -107,7 +108,9 @@ def make_executable(path):
 
 
 def highlight_flags(s, func):
-    repl = lambda m: func(m.group(0))
+    def repl(m):
+        return func(m.group(0))
+
     return player_cli.ctfconfig_wrapper.FLAG_FINDER.sub(repl, s)
 
 
